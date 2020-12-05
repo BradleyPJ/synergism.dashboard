@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         synergism dashboard
 // @namespace    blaze33
-// @version      0.1
+// @version      0.2
 // @description  Display relevant stats in a single panel
 // @author       blaze33
 // @match        https://pseudonian.github.io/SynergismOfficial/
@@ -40,9 +40,6 @@
 
   const settingsTab = document.getElementById('settings')
   const settingsChildNumber = settingsTab.childElementCount - 1
-  console.log({
-    settingsTab
-  })
 
   const tab = document.createElement('div')
   tab.id = 'dashboardSubTab'
