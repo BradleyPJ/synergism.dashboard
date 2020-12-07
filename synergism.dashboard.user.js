@@ -45,10 +45,9 @@
   tab.id = 'dashboardSubTab'
   tab.style.display = 'none'
   tab.innerHTML = `
-      <div id="dashboard" class="db-table" style="background-color: #111;">
+    <div id="dashboard" class="db-table" style="background-color: #111;">
       <div class="db-table-cell" style="width: 35%;">
         <h3 style="color: plum">Overall progress stats</h3>
-        <p>
         <div class="db-stat-line" style="color: orange">Constant: <span class="dashboardstat"></span></div>
         <div class="db-stat-line" style="color: yellow">Cube tributes: <span class="dashboardstat"></span></div>
         <div class="db-stat-line" style="color: orchid">Tesseract gifts: <span class="dashboardstat"></span></div>
@@ -58,32 +57,27 @@
         <div class="db-stat-line" style="color: gold">C15 exponent: <span class="dashboardstat"></span></div>
         <div class="db-stat-line">Blessing levels: <span class="dashboardstat"></span></div>
         <div class="db-stat-line">Spirit levels: <span class="dashboardstat"></span></div>
-        </p>
 
         <h3 style="color: plum">Current run stats</h3>
-        <p>
         <div class="db-stat-line" style="color: white">Loadout: <span class="dashboardstat"></span></div>
         <div class="db-stat-line" style="color: plum">C1-5 completions: <span class="dashboardstat"></span></div>
         <div class="db-stat-line" style="color: limegreen">C6-10 completions: <span class="dashboardstat"></span></div>
         <div class="db-stat-line" style="color: cyan">Rune levels: <span class="dashboardstat"></span></div>
         <div class="db-stat-line">Talisman levels: <span class="dashboardstat"></span></div>
-        </p>
 
         <h3 style="color: plum">Settings</h3>
-        <p>
         <div class="db-stat-line">Autoresearch: <button onclick="toggleAutoResearch()" class="dashboardstat"></button></div>
         <div class="db-stat-line">Autorunes: <button onclick="toggleAutoSacrifice(0)" class="dashboardstat"></button></div>
         <div class="db-stat-line">Autochallenge: <button onclick="toggleAutoChallengeRun()" class="dashboardstat"></button></div>
         <div class="db-stat-line">Ants Autosacrifice: <span class="dashboardstat"> <button onclick="toggleAntAutoSacrifice(0)"></button></span></div>
-        </p>
-        </div>
-        <div class="db-table-cell">
+      </div>
+      <div class="db-table-cell">
         <h3 style="color: plum">Time to plat upgrade</h3>
         Platonic upgrade: <input id="db-plat-number" type="number" min="1" max="15" step="1" value="5">
         Number of levels: <input id="db-plat-amount" type="number" min="1" max="100" step="1" value="1">
         <div id="cubeTimes"></div>
       </div>
-      </div>`
+    </div>`
   settingsTab.appendChild(tab)
 
   const statValues = {
