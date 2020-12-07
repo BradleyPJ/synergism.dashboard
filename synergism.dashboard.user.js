@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         synergism dashboard
 // @namespace    blaze33
-// @version      0.2
+// @version      0.3
 // @description  Display relevant stats in a single panel
 // @author       blaze33
 // @match        https://pseudonian.github.io/SynergismOfficial/
@@ -71,10 +71,10 @@
 
         <h3 style="color: plum">Settings</h3>
         <p>
-        <div class="db-stat-line">Autoresearch: <span class="dashboardstat"></span></div>
-        <div class="db-stat-line">Autorunes: <span class="dashboardstat"></span></div>
-        <div class="db-stat-line">Autochallenge: <span class="dashboardstat"></span></div>
-        <div class="db-stat-line">Ants Autosacrifice: <span class="dashboardstat"></span></div>
+        <div class="db-stat-line">Autoresearch: <button onclick="toggleAutoResearch()" class="dashboardstat"></button></div>
+        <div class="db-stat-line">Autorunes: <button onclick="toggleAutoSacrifice(0)" class="dashboardstat"></button></div>
+        <div class="db-stat-line">Autochallenge: <button onclick="toggleAutoChallengeRun()" class="dashboardstat"></button></div>
+        <div class="db-stat-line">Ants Autosacrifice: <span class="dashboardstat"> <button onclick="toggleAntAutoSacrifice(0)"></button></span></div>
         </p>
         </div>
         <div class="db-table-cell">
@@ -87,21 +87,21 @@
   settingsTab.appendChild(tab)
 
   const statValues = {
-    0: () => format(player.ascendShards),
-    1: () => document.getElementById("cubeBlessingTotalAmount").textContent,
-    2: () => document.getElementById("tesseractBlessingTotalAmount").textContent,
-    3: () => document.getElementById("hypercubeBlessingTotalAmount").textContent,
-    4: () => document.getElementById("platonicBlessingTotalAmount").textContent,
-    5: () => player.challengecompletions.slice(11, 15).join(' / '),
-    6: () => format(player.challenge15Exponent, 0),
-    7: () => player.runeBlessingLevels.slice(1, 6).map(x => format(x)).join(' / '),
-    8: () => player.runeSpiritLevels.slice(1, 6).map(x => format(x)).join(' / '),
+    0: (el) => el.textContent = format(player.ascendShards),
+    1: (el) => el.textContent = document.getElementById("cubeBlessingTotalAmount").textContent,
+    2: (el) => el.textContent = document.getElementById("tesseractBlessingTotalAmount").textContent,
+    3: (el) => el.textContent = document.getElementById("hypercubeBlessingTotalAmount").textContent,
+    4: (el) => el.textContent = document.getElementById("platonicBlessingTotalAmount").textContent,
+    5: (el) => el.textContent = player.challengecompletions.slice(11, 15).join(' / '),
+    6: (el) => el.textContent = format(player.challenge15Exponent, 0),
+    7: (el) => el.textContent = player.runeBlessingLevels.slice(1, 6).map(x => format(x)).join(' / '),
+    8: (el) => el.textContent = player.runeSpiritLevels.slice(1, 6).map(x => format(x)).join(' / '),
 
-    9: () => player.usedCorruptions.slice(1, 10).join(' / '),
-    10: () => player.challengecompletions.slice(1, 6).join(' / '),
-    11: () => player.challengecompletions.slice(6, 11).join(' / '),
-    12: () => player.runelevels.join(' / '),
-    13: () => {
+    9: (el) => el.textContent = player.usedCorruptions.slice(1, 10).join(' / '),
+    10: (el) => el.textContent = player.challengecompletions.slice(1, 6).join(' / '),
+    11: (el) => el.textContent = player.challengecompletions.slice(6, 11).join(' / '),
+    12: (el) => el.textContent = player.runelevels.join(' / '),
+    13: (el) => {
       const talismanColors = {
         1: 'white',
         2: 'limegreen',
@@ -110,47 +110,53 @@
         5: 'orange',
         6: 'crimson'
       }
-      return player.talismanLevels.slice(1, 8).map(
+      el.innerHTML = player.talismanLevels.slice(1, 8).map(
         (lvl, i) => `<span style="color: ${talismanColors[player.talismanRarity[i + 1]]}">${lvl}</span>`
       ).join(' / ')
     },
 
-    14: () => {
+    14: (el) => {
       const roomba = player.autoResearchToggle
-      const color = roomba ? 'green' : 'red'
-      return `<span style="color: ${color}">${roomba ? 'ON' : 'OFF'}</span>`
+      el.style.color = roomba ? 'green' : 'red'
+      el.textContent = roomba ? 'ON' : 'OFF'
     },
-    15: () => {
+    15: (el) => {
       const autorune = player.autoSacrificeToggle
-      const color = autorune ? 'green' : 'red'
-      return `<span style="color: ${color}">${autorune ? 'ON' : 'OFF'}</span>`
+      el.style.color = autorune ? 'green' : 'red'
+      el.textContent = autorune ? 'ON' : 'OFF'
     },
-    16: () => {
+    16: (el) => {
       const autoch = player.autoChallengeRunning
-      const color = autoch ? 'green' : 'red'
-      return `<span style="color: ${color}">${autoch ? 'ON' : 'OFF'}</span>`
+      el.style.color = autoch ? 'green' : 'red'
+      el.textContent = autoch ? 'ON' : 'OFF'
     },
-    17: () => {
+    17: (el) => {
       const autosac = player.autoAntSacrifice
-      const color = autosac ? 'green' : 'red'
       const realtime = player.autoAntSacrificeMode === 2
       const seconds = player.autoAntSacTimer
-      return `(${seconds} ${realtime ? 'real' : 'igt'} seconds) <span style="color: ${color}">${autosac ? 'ON' : 'OFF'}</span>`
+      const text = el.firstChild
+      text.data = `(${seconds} ${realtime ? 'real' : 'igt'} seconds) `
+      const button = el.lastElementChild
+      button.style.color = autosac ? 'green' : 'red'
+      button.textContent = autosac ? 'ON' : 'OFF'
     },
   }
 
   const stats = Array.from(tab.querySelectorAll('.dashboardstat'))
-  const cubeTimes = tab.querySelector('#cubeTimes')
-  let dashboardLoopRef = 0
-  const renderDashboard = () => {
+  let dashboardLoopRefFast = 0
+  const renderDashboardFast = () => {
     if (currentTab !== 'settings') {
       open = false
       exitDashboard()
       return
     }
     stats.forEach((stat, i) => {
-      stat.innerHTML = statValues[i] ? statValues[i]() : '-'
+      if (statValues[i]) { statValues[i](stat) }
     })
+  }
+  const cubeTimes = tab.querySelector('#cubeTimes')
+  let dashboardLoopRefSlow = 0
+  const renderDashboardSlow = () => {
     const upgrade = Number(document.getElementById('db-plat-number').value)
     const levels = Number(document.getElementById('db-plat-amount').value)
     cubeTimes.innerHTML = `<pre>${getCubeTimes(upgrade, levels)}</pre>`
@@ -171,8 +177,10 @@
     currentTab = 'settings'
     player.subtabNumber = n
     // render and display dashboard
-    renderDashboard()
-    dashboardLoopRef = setInterval(renderDashboard, 1000)
+    renderDashboardFast()
+    renderDashboardSlow()
+    dashboardLoopRefFast = setInterval(renderDashboardFast, 100)
+    dashboardLoopRefSlow = setInterval(renderDashboardSlow, 1000)
     activeTab = settingsTab.getElementsByClassName('subtabActive')[0]
     activeTab.style.display = 'none'
     tab.style.display = 'block'
@@ -184,7 +192,8 @@
     })
   }
   const exitDashboard = () => {
-    clearInterval(dashboardLoopRef)
+    clearInterval(dashboardLoopRefFast)
+    clearInterval(dashboardLoopRefSlow)
     tab.style.display = 'none'
     activeTab.style.display = null
     button.innerText = 'Dashboard'
