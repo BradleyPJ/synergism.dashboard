@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         synergism dashboard
 // @namespace    blaze33
-// @version      0.3
+// @version      0.4
 // @description  Display relevant stats in a single panel
 // @author       blaze33
 // @match        https://pseudonian.github.io/SynergismOfficial/
@@ -165,7 +165,12 @@
   const button = document.createElement('button')
   let activeTab
   button.className = 'ascendunlockib'
-  button.style = 'border: 2px solid orange; float: right;'
+  button.style = `
+    border: 2px solid orange;
+    float: right;
+    height: 30px;
+    width: 150px;
+    margin: 9px 0;`
   const openDashboard = () => {
     // compute blessings total amounts
     const n = player.subtabNumber
@@ -186,10 +191,8 @@
     tab.style.display = 'block'
     button.innerText = 'Exit Dashboard'
     button.style.marginLeft = '100%'
-    const buttons = Array.from(settingsTab.firstElementChild.getElementsByTagName('button')).slice(0, settingsChildNumber)
-    buttons.forEach(button => {
-      button.style.display = 'none'
-    })
+    const buttons = settingsTab.getElementsByClassName('subtabSwitcher')[0]
+    buttons.style.display = 'none'
   }
   const exitDashboard = () => {
     clearInterval(dashboardLoopRefFast)
@@ -198,10 +201,8 @@
     activeTab.style.display = null
     button.innerText = 'Dashboard'
     button.style.marginLeft = null
-    const buttons = Array.from(settingsTab.firstElementChild.getElementsByTagName('button')).slice(0, settingsChildNumber)
-    buttons.forEach(button => {
-      button.style.display = null
-    })
+    const buttons = settingsTab.getElementsByClassName('subtabSwitcher')[0]
+    buttons.style.display = null
   }
   let open = false
   button.onclick = event => {
@@ -215,7 +216,7 @@
     return false
   }
   button.innerText = 'Dashboard'
-  settingsTab.firstElementChild.appendChild(button)
+  settingsTab.firstElementChild.insertAdjacentElement('beforebegin', button)
 
   // below is Lulu's getCubeTime adapted for the dasboard script
   // ==UserScript==
