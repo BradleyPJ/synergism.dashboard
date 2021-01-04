@@ -63,7 +63,9 @@
         <div class="db-stat-line" style="color: plum">C1-5 completions: <span class="dashboardstat"></span></div>
         <div class="db-stat-line" style="color: limegreen">C6-10 completions: <span class="dashboardstat"></span></div>
         <div class="db-stat-line" style="color: cyan">Rune levels: <span class="dashboardstat"></span></div>
-        <div class="db-stat-line">Talisman levels: <span class="dashboardstat"></span></div>
+        <div class="db-stat-line">Talisman levels: <span class="dashboardstat">
+          <span></span> / <span></span> / <span></span> / <span></span> / <span></span> / <span></span> / <span></span>
+        </span></div>
 
         <h3 style="color: plum">Settings</h3>
         <div class="db-stat-line">Autoresearch: <button onclick="toggleAutoResearch()" class="dashboardstat"></button></div>
@@ -104,9 +106,10 @@
         5: 'orange',
         6: 'crimson'
       }
-      el.innerHTML = player.talismanLevels.slice(1, 8).map(
-        (lvl, i) => `<span style="color: ${talismanColors[player.talismanRarity[i + 1]]}">${lvl}</span>`
-      ).join(' / ')
+      Array.from(el.querySelectorAll('span')).forEach((span, i) => {
+        span.style.color = talismanColors[player.talismanRarity[i + 1]]
+        span.textContent = player.talismanLevels[i + 1]
+      })
     },
 
     14: (el) => {
