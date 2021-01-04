@@ -254,14 +254,14 @@
     const hyperRate = hyper / time
     const tessRate = tess / time
     const Day = (player.ascensionCounter) / (3600)
-    const platTimeNeeded = Math.max(0, (platCost - player.wowPlatonicCubes - plat) / platRate)
-    const hyperTimeNeeded = Math.max(0, (hyperCost - player.wowHypercubes - hyper) / hyperRate)
-    const tessTimeNeeded = Math.max(0, (tessCost - player.wowTesseracts - tess) / tessRate)
+    const platTimeNeeded = (platCost - player.wowPlatonicCubes - plat) / platRate
+    const hyperTimeNeeded = (hyperCost - player.wowHypercubes - hyper) / hyperRate
+    const tessTimeNeeded = (tessCost - player.wowTesseracts - tess) / tessRate
     var Plats = SplitTime([Math.max(0, ((platCost - player.wowPlatonicCubes - x[7]) / (x[7] / Day)))]);
     var Hypers = SplitTime([Math.max(0, ((hyperCost - player.wowHypercubes - x[6]) / (x[6] / Day)))]);
     var Tess = SplitTime([Math.max(0, ((tessCost - player.wowTesseracts - x[5]) / (x[5] / Day)))]);
 
-    const totalTimeNeeded = Math.max(platTimeNeeded, hyperTimeNeeded, tessTimeNeeded)
+    const totalTimeNeeded = Math.max(0, platTimeNeeded, hyperTimeNeeded, tessTimeNeeded)
     var minutesToAdd = totalTimeNeeded * 1440;
     var currentDate = new Date();
     var futureDate = new Date(currentDate.getTime() + minutesToAdd * 60000);
