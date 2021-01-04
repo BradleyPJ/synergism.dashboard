@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         synergism dashboard
 // @namespace    blaze33
-// @version      0.4
+// @version      0.5
 // @description  Display relevant stats in a single panel
 // @author       blaze33
 // @match        https://pseudonian.github.io/SynergismOfficial/
@@ -216,6 +216,7 @@
   settingsTab.firstElementChild.insertAdjacentElement('beforebegin', button)
 
   // below is Lulu's getCubeTime adapted for the dasboard script
+  // fixed the leftovers formula + some refactoring
   // ==UserScript==
   // @name         time to plat upgrade
   // @namespace    lulu
