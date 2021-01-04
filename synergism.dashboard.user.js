@@ -249,20 +249,19 @@
     const tessCost = Upgrades.tesseracts * levels
     const hyperCost = Upgrades.hypercubes * levels
     const platCost = Upgrades.platonics * levels
-    const time = player.ascensionCounter / 3600 / 24
+    const time = player.ascensionCounter / 3600
     const platRate = plat / time
     const hyperRate = hyper / time
     const tessRate = tess / time
-    const Day = (player.ascensionCounter) / (3600)
     const platTimeNeeded = (platCost - player.wowPlatonicCubes - plat) / platRate
     const hyperTimeNeeded = (hyperCost - player.wowHypercubes - hyper) / hyperRate
     const tessTimeNeeded = (tessCost - player.wowTesseracts - tess) / tessRate
-    var Plats = SplitTime([Math.max(0, ((platCost - player.wowPlatonicCubes - x[7]) / (x[7] / Day)))]);
-    var Hypers = SplitTime([Math.max(0, ((hyperCost - player.wowHypercubes - x[6]) / (x[6] / Day)))]);
-    var Tess = SplitTime([Math.max(0, ((tessCost - player.wowTesseracts - x[5]) / (x[5] / Day)))]);
+    var Plats = SplitTime(Math.max(0, platTimeNeeded));
+    var Hypers = SplitTime(Math.max(0, hyperTimeNeeded));
+    var Tess = SplitTime(Math.max(0, tessTimeNeeded));
 
     const totalTimeNeeded = Math.max(0, platTimeNeeded, hyperTimeNeeded, tessTimeNeeded)
-    var minutesToAdd = totalTimeNeeded * 1440;
+    var minutesToAdd = totalTimeNeeded * 60;
     var currentDate = new Date();
     var futureDate = new Date(currentDate.getTime() + minutesToAdd * 60000);
 
@@ -273,7 +272,7 @@
 
       "At your current rate, you are expected to get this at:\n" + futureDate + "\n" +
 
-      "Leftovers after " + [totalTimeNeeded.toPrecision(4)] + " days:\n" +
+      "Leftovers after " + [(totalTimeNeeded / 24).toPrecision(4)] + " days:\n" +
       "Platonics: " + [(platRate * (totalTimeNeeded - platTimeNeeded)).toPrecision(4)] + " \n" +
       "Hypers: " + [(hyperRate * (totalTimeNeeded - hyperTimeNeeded)).toPrecision(4)] + " \n" +
       "Tesseracts: " + [(tessRate * (totalTimeNeeded - tessTimeNeeded)).toPrecision(4)]
