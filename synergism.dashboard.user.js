@@ -75,7 +75,7 @@
         <h3 style="color: plum">Time to plat upgrade</h3>
         Platonic upgrade: <input id="db-plat-number" type="number" min="1" max="15" step="1" value="5">
         Number of levels: <input id="db-plat-amount" type="number" min="1" max="100" step="1" value="1">
-        <div id="cubeTimes"></div>
+        <div><pre id="cubeTimes"></pre></div>
       </div>
     </div>`
   settingsTab.appendChild(tab)
@@ -153,7 +153,7 @@
   const renderDashboardSlow = () => {
     const upgrade = Number(document.getElementById('db-plat-number').value)
     const levels = Number(document.getElementById('db-plat-amount').value)
-    cubeTimes.innerHTML = `<pre>${getCubeTimes(upgrade, levels)}</pre>`
+    cubeTimes.textContent = getCubeTimes(upgrade, levels)
   }
 
   const button = document.createElement('button')
